@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://oanacristina:oanacristina@cluster0.alspmbt.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "secret"
+}
