@@ -1,5 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const cors = require("cors");
+
 const app = express();
 
 //Connect Database
@@ -7,6 +9,8 @@ connectDB();
 
 //Init middleware
 app.use(express.json({ extended: false }));
+
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send({ msg: "Welcome to the contact keeper API" });

@@ -1,6 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+    const { setAlert } = alertContext;
+    const navigate = useNavigate();
+    const { register, error, clearErrors, isAuthenticated } = authContext;
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+        if (error === "User already exists") {
+            setAlert(error, "danger");
+            clearErrors();
+        }
+        // eslint-disable-next-line
+    }, [error, isAuthenticated]);
+
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -16,7 +36,17 @@ const Register = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("Register submit");
+        if (name === "" || email === "" || password === "") {
+            setAlert("Please fill in all the fields", "danger");
+        } else if (password !== password2) {
+            setAlert("Passwords must match", "danger");
+        } else {
+            register({
+                name,
+                email,
+                password,
+            });
+        }
     };
 
     return (
@@ -50,6 +80,7 @@ const Register = () => {
                         name="password"
                         value={password}
                         onChange={onChange}
+                        minLength="6"
                     />
                 </div>
                 <div className="form-group">
