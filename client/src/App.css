@@ -353,6 +353,11 @@ table th {
   background: var(--light-color);
 }
 
+.logoutButton {
+  width: 60px;
+  border-radius: 10px;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
